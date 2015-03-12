@@ -52,9 +52,7 @@
         })(jQuery);
 
         //调用方法
-        $(function(){
             $('div').lockDimensions('width').css('color','red');
-        })
 
 
         //规范插件命名空间
@@ -64,6 +62,40 @@
             var methods={
                 init:function(options){
                     //this
+                    if(options==undefined){
+                        alert("无参数调用")
+                    }else{
+                        alert("有参数调用"+options['foo']);
+                    }
+
+
+                    return this.each(function(){
+                        var $this=$(this),
+                                data=$this.data('gkToolTip'),
+                                toolTip=$('<div />',{
+                                    text:$this.attr('title')
+                                });
+
+                        //如果插件还未被初始化
+                        if(!data){
+                            $(this).data('gkToolTip',{
+                               target:$this,
+                                tooltip:toolTip
+                            });
+                        }
+
+                    });
+
+                },
+                destroy:function(){
+                    return this.each(function(){
+                        var $this=$(this),
+                                data=$this.data('gkToolTip');
+
+                        $(window).unbind('.tooltip');
+                        data.tooltip.remove();
+                        $this.removeData('tooltip');
+                    });
                 },
                 show:function(){
                     //this
@@ -73,13 +105,14 @@
                 },
                 update:function(content){
                     //this
+                    alert(content);
                 }
             };
 
             $.fn.gkToolTip=function(method){
                 //方法调用
                 if(methods[method]){
-                    return methods[method].apply(this,Array.prototype.slice.call(arguments,1));
+                    return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
                 }else if(typeof method==="object" || !method){
                     return methods.init.apply(this,arguments);
                 }else{
@@ -90,7 +123,7 @@
 
         //调用方法
         //init调用方法
-        $('div').gkToolTip.init();
+        $('div').gkToolTip();
         //init调用方法
         $('div').gkToolTip({
             foo:'bar'
@@ -100,7 +133,9 @@
         $('div').gkToolTip('hide');
 
         //调用update方法
-        $('div').gkToolTip('update','this is the new toolTip content');
+        $(function(){
+            $('div').gkToolTip('update','this is the new toolTip content');
+        });
 
 
     </script>

@@ -1,2 +1,8 @@
-1、快速开发 jQuery 插件的 10 大技巧
+1、jQuery在线工具
+    http://tool.oschina.net/apidocs/apidoc?api=jquery
+
+2、快速开发 jQuery 插件的 10 大技巧
     http://www.oschina.net/news/41776/jquery-10-tips
+
+3、BootStrap toolTip 插件源码
+    ttps://github.com/twbs/bootstrap/blob/master/js/tooltip.js#L430

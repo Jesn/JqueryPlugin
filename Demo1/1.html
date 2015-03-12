@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+    <title>Jquery 插件模式开发 第一例</title>
+    <script>
+        /*
+        * 操作步骤:
+        * 1、首先定义一个不受外界干扰的作用域,外部的代码不能直接访问插件内的代码,插件内部的代码不污染全局变量。
+        *    在一定的程度上解耦了插件与运行环境的依赖关系。
+        *    $(function(){}()); ////step01 定义JQuery的作用域
+        *
+        * 2、为Jquery定义一个插件$.fn.HelloWorld=function(options){}
+        *
+        * 3、设置插件的默认设置
+        *     //step03-1 设定插件的默认设置
+                 var defaults={
+                 showId:"helloword",
+                 message:"你好,这里是骑客插件中心!"
+                 };
+
+             //step03-2 合并用户自定义设置和默认设置
+             var options= $.extend(defaults,options);
+        *
+        *   4、//step04 支持Jquery选择器
+        *        this.each(function(){
+                    showLink(this)
+                 });
+
+            5、 step5 支持链式调用
+                return this.each(function () {});
+
+            6、//step:06-1 在插件中定义一个内部方法
+               //step:06-2 实现06-1 内部方法
+        * */
+
+
+        $(function(){
+
+            //step03 设定插件的默认设置
+            var defaults={
+                showId:"helloword",
+                message:"你好,这里是骑客插件中心!"
+            };
+
+            //step02 插件的扩展方法
+            $.fn.HelloWorld=function(options){
+                //step03 合并用户自定义设置和默认设置
+                var options= $.extend(defaults,options);
+
+                //step04 支持Jquery选择器
+                this.each(function(){
+                    //step:06-2 实现06-1 内部方法
+                    showLink(this)
+                });
+            };
+
+
+            //step:06-1 在插件中定义一个内部方法
+            var showLink=function(obj){
+                $(obj).append(function(){
+                    alert($(obj).attr("href")==null?"该元素不存在href属性":$(obj).attr("href"));
+                    return $(obj).attr("href");
+                });
+            };
+
+        }(jQuery));
+
+
+
+        $(function(){
+            $("#gk_test").HelloWorld();
+        })
+    </script>
+</head>
+<body>
+    <div>
+        <a id="gk_test" href="http://www.baidu.com">百度</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script async>
+        function Animail(name){
+            this.name=name;
+            //this.color="White";
+        };
+
+        //通过prototype 来共享实例属性
+        Animail.prototype.color="white";
+
+        //封装一个方法
+        Animail.prototype.walk=function(){
+            console.log(this.name+" can walk");
+        };
+
+        var car1=new Animail("大毛");
+        var car2=new Animail("二毛");
+
+        //自定义单个实例的color属性
+        car1.color="Yellow";
+        console.log(car1.name+"的颜色是:"+car1.color);
+        console.log(car2.name+"的颜色是:"+car2.color);
+
+        car1.walk();
+
+    </script>
+</head>
+<body>
+<a href="http://javascript.ruanyifeng.com/oop/encapsulation.html" target="_blank">文章来源</a>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Html5 本地存储之Web Storage篇</title>
+</head>
+<body>
+    <div class="container">
+        <div class="ipt-container">
+            <label for="user_name">姓名:</label>
+            <input type="text" id="user_name" name="user_name" class="ipt-text">
+            <br>
+            <label for="user_mobile">手机:</label>
+            <input type="text" id="user_mobile" name="user_mobile" class="ipt-text">
+            <br>
+            <input type="submit" onclick="save()" value="新增记录">
+        </div>
+        <br>
+        <div class="search-container">
+            <label for="search-UserName">请输入查询姓名:</label>
+            <input type="text" id="search-UserName" placeholder="请输入需要查询的姓名">
+            <input type="button" id="btn_Search" onclick="search()" value="查询">
+            <label id="searchResult"></label>
+        </div>
+
+        <br>
+        <div class="data-list" id="list"></div>
+
+    </div>
+
+
+<script>
+    window.onload=function(){
+        LoadAll();
+    };
+
+    //保存数据
+    function save(){
+        var userName=document.getElementById("user_name").value;
+        var mobile=document.getElementById("user_mobile").value;
+        localStorage.setItem(userName,mobile);
+    }
+
+    function search(){
+        var searchName=document.getElementById("search-UserName").value;
+        if(searchName!=undefined && searchName!=null)
+        {
+            var mobile = localStorage.getItem(searchName);
+            alert(searchName +" 对应的手机号为: "+ mobile);
+        }else{
+            alert("请输入用户信息");
+        }
+    }
+
+    function LoadAll(){
+        var html="";
+        if(localStorage.length>0){
+            html += "<table><tr><td>姓名</td><td>手机号</td></tr>";
+            for(var i = 0 ; i < localStorage.length ; i++ ){
+                var userName=localStorage.key(i);
+                var mobile=localStorage.getItem(userName);
+                console.log(userName + "-" + mobile);
+
+                html += " <tr><td>"+userName+"</td><td>"+mobile+"</td></tr>";
+            }
+            html += "</table>";
+
+            document.getElementById("list").innerHTML = html;
+        }
+    };
+
+</script>
+</body>
+</html>

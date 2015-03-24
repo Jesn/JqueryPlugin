@@ -3,6 +3,8 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+
+    <!--prototype对象-->
     <script async>
         function Animail(name){
             this.name=name;
@@ -27,6 +29,21 @@
 
         car1.walk();
 
+    </script>
+
+
+    <!--原型链-->
+    <script async="async">
+        function MyArray(){}
+
+        MyArray.prototype = new Array();
+        //constructor 属性默认指向 prototype属性对应的构造函数
+        MyArray.prototype.constructor=MyArray;
+        var mine=new Array();
+        mine.push(1,3,5,7,9);
+
+        console.log(mine.length);
+        console.log(mine instanceof Array);
     </script>
 </head>
 <body>
